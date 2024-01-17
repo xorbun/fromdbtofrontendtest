@@ -17,7 +17,9 @@ public class BlogControler
     private BlogService blogService;
 
     @GetMapping
-    public Page<Blog> getBlogs(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size, @RequestParam(defaultValue ="id_blog" )String orderBy)
+    public Page<Blog> getBlogs(@RequestParam(defaultValue = "0")int page,
+                               @RequestParam(defaultValue = "10")int size,
+                               @RequestParam(defaultValue ="id_blog" )String orderBy)
     {
         return blogService.Getblog(page,size,orderBy);
     }
