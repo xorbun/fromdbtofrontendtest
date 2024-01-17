@@ -3,6 +3,7 @@ package brunocapobianco.fromdbtofrontendtest.Controllers;
 import brunocapobianco.fromdbtofrontendtest.Entities.User;
 import brunocapobianco.fromdbtofrontendtest.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +17,11 @@ public class UserController
     private UserService userservice;
 
     @GetMapping
-    public List<User>Getusers()
+    public Page<User> getUsers(@RequestParam(defaultValue = "1") int page,
+                               @RequestParam(defaultValue = "10")int size,
+                               @RequestParam(defaultValue = "nome")String orderBy)
     {
-        return userservice.Getusers();
+        return userservice.Getusers(page,size,orderBy);
     }
     @GetMapping("/{id_user}")
     public User getUser(@PathVariable UUID id_user)

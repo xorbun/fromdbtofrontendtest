@@ -4,6 +4,10 @@ import brunocapobianco.fromdbtofrontendtest.Entities.Blog;
 import brunocapobianco.fromdbtofrontendtest.Exceptions.NotFoundException;
 import brunocapobianco.fromdbtofrontendtest.Repositories.BlogDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +19,11 @@ public class BlogService
     @Autowired
     private BlogDao blogdao;
 
-    public List<Blog> Getblog()
+    public Page<Blog> Getblog(int page,int size,String orderBy)
     {
-        return blogdao.findAll();
+        if(size>=100)size=100;
+        Pageable pageable= PageRequest.of(page,size, Sort.by(orderBy));
+        return blogdao.findAll(pageable);
     }
     public Blog findById(UUID id_blog)
     {

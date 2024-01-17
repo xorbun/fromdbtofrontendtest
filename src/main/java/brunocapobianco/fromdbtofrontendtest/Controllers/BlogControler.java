@@ -3,6 +3,7 @@ package brunocapobianco.fromdbtofrontendtest.Controllers;
 import brunocapobianco.fromdbtofrontendtest.Entities.Blog;
 import brunocapobianco.fromdbtofrontendtest.Services.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +17,9 @@ public class BlogControler
     private BlogService blogService;
 
     @GetMapping
-    public List<Blog> getBlogs()
+    public Page<Blog> getBlogs(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size, @RequestParam(defaultValue ="id_blog" )String orderBy)
     {
-        return blogService.Getblog();
+        return blogService.Getblog(page,size,orderBy);
     }
     @GetMapping("/{id_blog}")
     public  Blog getBlogById(@PathVariable UUID id_blog)
