@@ -20,10 +20,7 @@ public class UserService
     {
         return userDao.findAll();
     }
-    public User getUser(UUID id_user)
-    {
-        return userDao.findById(id_user).orElseThrow(()->new NotFoundException(id_user));
-    }
+
     public User save(User body)
     {
         body.setDatanascita(LocalDate.now());

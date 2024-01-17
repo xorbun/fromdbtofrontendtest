@@ -23,7 +23,7 @@ public class UserController
     @GetMapping("/{id_user}")
     public User getUser(@PathVariable UUID id_user)
     {
-       return userservice.getUser(id_user);
+       return userservice.findById(id_user);
     }
     @PostMapping
     public User createUser(@RequestBody User newUserPayload)
