@@ -3,6 +3,7 @@ package brunocapobianco.fromdbtofrontendtest.Services;
 import brunocapobianco.fromdbtofrontendtest.Entities.Blog;
 import brunocapobianco.fromdbtofrontendtest.Exceptions.NotFoundException;
 import brunocapobianco.fromdbtofrontendtest.Repositories.BlogDao;
+import brunocapobianco.fromdbtofrontendtest.Repositories.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,8 @@ public class BlogService
 {
     @Autowired
     private BlogDao blogdao;
+    @Autowired
+    private UserDao userDao;
 
     public Page<Blog> Getblog(int page,int size,String orderBy)
     {
@@ -29,8 +32,10 @@ public class BlogService
     {
         return blogdao.findById(id_blog).orElseThrow(()->new NotFoundException(id_blog));
     }
-    public Blog save(Blog body)
+    public Blog save(Blog body,UUID id)
     {
+        //dovrebbe prendersi l id dell utente
+        body.setUser(userDao.findById(id).orElseThrow(()->new NotFoundException(id)));
         return blogdao.save(body);
     }
     public Blog findByIdAndUpdate(UUID id_blog,Blog body)

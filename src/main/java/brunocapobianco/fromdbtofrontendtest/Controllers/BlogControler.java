@@ -1,6 +1,7 @@
 package brunocapobianco.fromdbtofrontendtest.Controllers;
 
 import brunocapobianco.fromdbtofrontendtest.Entities.Blog;
+import brunocapobianco.fromdbtofrontendtest.Entities.User;
 import brunocapobianco.fromdbtofrontendtest.Services.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,9 +30,9 @@ public class BlogControler
         return blogService.findById(id_blog);
     }
     @PostMapping
-    public Blog createBlog(@RequestBody Blog newBlogPayload)
+    public Blog createBlog(@RequestBody Blog newBlogPayload,@RequestParam UUID id)
     {
-        return blogService.save(newBlogPayload);
+        return blogService.save(newBlogPayload,id);
     }
     @PutMapping("/{id_blog}")
     public Blog findByIdAndUpdate(@PathVariable UUID id_blog,@RequestBody Blog modifyBlogPayload)
