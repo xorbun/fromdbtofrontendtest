@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -21,6 +22,6 @@ public class User
     private String nome;
     private String cognome;
     private String email;
-    private String datanascita;
+    private LocalDate datanascita;
     private String avatar;
 }
