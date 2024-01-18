@@ -2,6 +2,8 @@ package brunocapobianco.fromdbtofrontendtest.Services;
 
 import brunocapobianco.fromdbtofrontendtest.Entities.Blog;
 import brunocapobianco.fromdbtofrontendtest.Exceptions.NotFoundException;
+import brunocapobianco.fromdbtofrontendtest.Payloads.NewBlogDTO;
+import brunocapobianco.fromdbtofrontendtest.Payloads.NewBlogDTOResponse;
 import brunocapobianco.fromdbtofrontendtest.Repositories.BlogDao;
 import brunocapobianco.fromdbtofrontendtest.Repositories.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +34,16 @@ public class BlogService
     {
         return blogdao.findById(id_blog).orElseThrow(()->new NotFoundException(id_blog));
     }
-    public Blog save(Blog body,UUID id)
+    public Blog save(NewBlogDTO body, UUID id)
     {
-        //dovrebbe prendersi l id dell utente
-        body.setUser(userDao.findById(id).orElseThrow(()->new NotFoundException(id)));
-        return blogdao.save(body);
+        Blog newBlog=new Blog();
+        newBlog.setUser(userDao.findById(id).orElseThrow(()->new NotFoundException(id)));
+        newBlog.setTitolo(body.titolo());
+        newBlog.setCategoria(body.categoria());
+        newBlog.setCover(body.cover());
+        newBlog.setContenuto(body.contenuto());
+        newBlog.setTempodilettura(body.tempodilettura());
+        return blogdao.save(newBlog);
     }
     public Blog findByIdAndUpdate(UUID id_blog,Blog body)
     {

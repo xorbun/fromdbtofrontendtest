@@ -2,6 +2,7 @@ package brunocapobianco.fromdbtofrontendtest.Controllers;
 
 import brunocapobianco.fromdbtofrontendtest.Entities.Blog;
 import brunocapobianco.fromdbtofrontendtest.Entities.User;
+import brunocapobianco.fromdbtofrontendtest.Payloads.NewBlogDTO;
 import brunocapobianco.fromdbtofrontendtest.Services.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ public class BlogControler
     private BlogService blogService;
 
     @GetMapping
-    public Page<Blog> getBlogs(@RequestParam(defaultValue = "0")int page,
+    public Page<Blog> getBlogs(@RequestParam(defaultValue = "2")int page,
                                @RequestParam(defaultValue = "10")int size,
                                @RequestParam(defaultValue ="id_blog" )String orderBy)
     {
@@ -30,7 +31,7 @@ public class BlogControler
         return blogService.findById(id_blog);
     }
     @PostMapping
-    public Blog createBlog(@RequestBody Blog newBlogPayload,@RequestParam UUID id)
+    public Blog createBlog(@RequestBody NewBlogDTO newBlogPayload, @RequestParam UUID id)
     {
         return blogService.save(newBlogPayload,id);
     }

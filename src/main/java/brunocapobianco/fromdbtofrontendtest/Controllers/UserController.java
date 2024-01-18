@@ -1,12 +1,13 @@
 package brunocapobianco.fromdbtofrontendtest.Controllers;
 
 import brunocapobianco.fromdbtofrontendtest.Entities.User;
+import brunocapobianco.fromdbtofrontendtest.Payloads.NewUserDTO;
+import brunocapobianco.fromdbtofrontendtest.Payloads.NewUserDTOResponse;
 import brunocapobianco.fromdbtofrontendtest.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,9 +30,10 @@ public class UserController
        return userservice.findById(id_user);
     }
     @PostMapping
-    public User createUser(@RequestBody User newUserPayload)
+    public NewUserDTOResponse createUser(@RequestBody NewUserDTO newUserPayload)
     {
-        return userservice.save(newUserPayload);
+        User newUser=userservice.save(newUserPayload);
+        return new NewUserDTOResponse(newUser.getId_user());
     }
     @PutMapping("/{id_user}")
     public User getUserByIdAndUpdate(@PathVariable UUID id_user,@RequestBody User modifyUserPayload)

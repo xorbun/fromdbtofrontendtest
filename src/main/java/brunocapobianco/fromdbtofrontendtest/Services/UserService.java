@@ -2,6 +2,7 @@ package brunocapobianco.fromdbtofrontendtest.Services;
 
 import brunocapobianco.fromdbtofrontendtest.Entities.User;
 import brunocapobianco.fromdbtofrontendtest.Exceptions.NotFoundException;
+import brunocapobianco.fromdbtofrontendtest.Payloads.NewUserDTO;
 import brunocapobianco.fromdbtofrontendtest.Repositories.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Service
 public class UserService
 {
+
     @Autowired
     private UserDao userDao;
 
@@ -29,10 +31,15 @@ public class UserService
         return userDao.findAll(pageable);
     }
 
-    public User save(User body)
+    public User save(NewUserDTO body)
     {
-        body.setDatanascita(LocalDate.now());
-        return userDao.save(body);
+        User newUser=new User();
+        newUser.setNome(body.nome());
+        newUser.setCognome(body.cognome());
+        newUser.setEmail(body.email());
+        newUser.setDatanascita(LocalDate.now());
+        newUser.setAvatar("eoufhbeworughiowpefhwopeihgf");
+        return userDao.save(newUser);
     }
     public User findById(UUID id)
     {
