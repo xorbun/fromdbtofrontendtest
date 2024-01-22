@@ -22,6 +22,7 @@ public class User
     private String nome;
     private String cognome;
     private String email;
+    private String password;
     private LocalDate datanascita;
     private String avatar;
 }

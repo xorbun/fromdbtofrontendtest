@@ -8,4 +8,8 @@ public class NotFoundException extends RuntimeException
     {
         super("elemento con id "+ id + " non trovato");
     }
+    public NotFoundException(String message)
+    {
+        super("L' elemento con email "+ message +" non è stato trovato");
+    }
 }

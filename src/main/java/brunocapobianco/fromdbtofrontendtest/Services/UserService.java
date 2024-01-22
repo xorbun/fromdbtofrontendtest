@@ -59,4 +59,8 @@ public class UserService
         found.setAvatar(body.getAvatar());
         return userDao.save(found);
     }
+    public User findByEmail(String email)throws NotFoundException
+    {
+        return userDao.findByemail(email).orElseThrow(()->new NotFoundException(email));
+    }
 }
