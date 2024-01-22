@@ -1,4 +1,5 @@
 package brunocapobianco.fromdbtofrontendtest.Security;
+import brunocapobianco.fromdbtofrontendtest.Exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Value;
 import brunocapobianco.fromdbtofrontendtest.Entities.User;
 import io.jsonwebtoken.Jwts;
@@ -20,8 +21,21 @@ public class JWTTools
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
     }
-    public void verifyToken()
+    public void verifyToken(String token)
     {
-
+        try
+        {
+            Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build();
+        }
+        catch (Exception ex)
+        {
+            throw new UnauthorizedException("Problemi con il token! Effettua il login");
+        }
+    }
+    public String extractIdFromToken(String token)
+    {
+        return Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build()
+                .parseSignedClaims(token)
+                .getPayload().getSubject();
     }
 }

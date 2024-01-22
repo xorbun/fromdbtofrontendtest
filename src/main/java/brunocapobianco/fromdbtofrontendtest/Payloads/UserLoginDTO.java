@@ -1,4 +1,4 @@
 package brunocapobianco.fromdbtofrontendtest.Payloads;
 
-public record UserLoginDTO(String email,String Password) {
+public record UserLoginDTO(String email,String password) {
 }

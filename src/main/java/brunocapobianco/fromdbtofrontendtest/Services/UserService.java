@@ -37,6 +37,7 @@ public class UserService
         newUser.setNome(body.nome());
         newUser.setCognome(body.cognome());
         newUser.setEmail(body.email());
+        newUser.setPassword(body.password());
         newUser.setDatanascita(LocalDate.now());
         newUser.setAvatar("eoufhbeworughiowpefhwopeihgf");
         return userDao.save(newUser);
@@ -59,8 +60,9 @@ public class UserService
         found.setAvatar(body.getAvatar());
         return userDao.save(found);
     }
-    public User findByEmail(String email)throws NotFoundException
+    public User findByemail(String email)
     {
-        return userDao.findByemail(email).orElseThrow(()->new NotFoundException(email));
+        System.out.println("*******************************************"+ email);
+        return userDao.findByEmail(email).orElseThrow(()->new NotFoundException(email));
     }
 }
