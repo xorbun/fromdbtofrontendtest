@@ -1,5 +1,6 @@
 package brunocapobianco.fromdbtofrontendtest.Exceptions;
 
+import brunocapobianco.fromdbtofrontendtest.Payloads.ErrorsDTO;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,5 +31,11 @@ public class ExceptionsHandler
     {
         ex.printStackTrace();
         return new ErrorsPayload("problema al server", LocalDateTime.now());
+    }
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorsDTO handleUnauthorized(UnauthorizedException e)
+    {
+        return new ErrorsDTO(e.getMessage(), LocalDateTime.now());
     }
 }
