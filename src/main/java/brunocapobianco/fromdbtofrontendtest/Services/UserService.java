@@ -1,5 +1,6 @@
 package brunocapobianco.fromdbtofrontendtest.Services;
 
+import brunocapobianco.fromdbtofrontendtest.Entities.Role;
 import brunocapobianco.fromdbtofrontendtest.Entities.User;
 import brunocapobianco.fromdbtofrontendtest.Exceptions.NotFoundException;
 import brunocapobianco.fromdbtofrontendtest.Payloads.NewUserDTO;
@@ -38,6 +39,7 @@ public class UserService
         newUser.setCognome(body.cognome());
         newUser.setEmail(body.email());
         newUser.setPassword(body.password());
+        newUser.setRole(Role.USER);
         newUser.setDatanascita(LocalDate.now());
         newUser.setAvatar("eoufhbeworughiowpefhwopeihgf");
         return userDao.save(newUser);

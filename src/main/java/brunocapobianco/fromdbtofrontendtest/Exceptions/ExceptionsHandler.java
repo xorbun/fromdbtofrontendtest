@@ -34,8 +34,8 @@ public class ExceptionsHandler
     }
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ErrorsDTO handleUnauthorized(UnauthorizedException e)
+    public ErrorsDTO handleUnauthorized(UnauthorizedException ex)
     {
-        return new ErrorsDTO(e.getMessage(), LocalDateTime.now());
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
     }
 }

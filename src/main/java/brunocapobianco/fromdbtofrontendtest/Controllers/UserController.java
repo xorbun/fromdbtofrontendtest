@@ -6,6 +6,7 @@ import brunocapobianco.fromdbtofrontendtest.Payloads.NewUserDTOResponse;
 import brunocapobianco.fromdbtofrontendtest.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -25,6 +26,7 @@ public class UserController
         return userservice.Getusers(page,size,orderBy);
     }
     @GetMapping("/{id_user}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public User getUser(@PathVariable UUID id_user)
     {
        return userservice.findById(id_user);
@@ -36,11 +38,13 @@ public class UserController
         return new NewUserDTOResponse(newUser.getId_user());
     }
     @PutMapping("/{id_user}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public User getUserByIdAndUpdate(@PathVariable UUID id_user,@RequestBody User modifyUserPayload)
     {
         return userservice.findByIdAndUpdate(id_user,modifyUserPayload);
     }
     @DeleteMapping("{id_user}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteUser(@PathVariable UUID id_user)
     {
         userservice.findByIdAndDelete(id_user);

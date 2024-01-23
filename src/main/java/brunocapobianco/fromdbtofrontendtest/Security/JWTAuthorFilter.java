@@ -39,9 +39,9 @@ public class JWTAuthorFilter extends OncePerRequestFilter
         {
             String accessToken = authHeader.substring(7);
             jwtTools.verifyToken(accessToken);
-            String id = jwtTools.extractIdFromToken(accessToken); // L'id è nel token quindi devo estrarlo da lì
+            String id = jwtTools.extractIdFromToken(accessToken);
             User user = userService.findById(UUID.fromString(id));
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
         }
