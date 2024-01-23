@@ -21,8 +21,7 @@ public class AuthController
 {
     @Autowired
     private AuthService authService;
-    @Autowired
-    private UserService userService;
+
     @PostMapping("/login")
     public UserLoginResponseDTO login(@RequestBody UserLoginDTO body)
     {

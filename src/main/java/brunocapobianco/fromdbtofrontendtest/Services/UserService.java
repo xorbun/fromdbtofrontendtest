@@ -5,11 +5,13 @@ import brunocapobianco.fromdbtofrontendtest.Entities.User;
 import brunocapobianco.fromdbtofrontendtest.Exceptions.NotFoundException;
 import brunocapobianco.fromdbtofrontendtest.Payloads.NewUserDTO;
 import brunocapobianco.fromdbtofrontendtest.Repositories.UserDao;
+import brunocapobianco.fromdbtofrontendtest.Security.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -23,6 +25,10 @@ public class UserService
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private JWTTools jwtTools;
+    @Autowired
+    private PasswordEncoder bcrypt;
 
     public Page<User>Getusers(int page,int size,String orderBy)
     {
@@ -42,13 +48,14 @@ public class UserService
         User found=this.findById(id);
         userDao.delete(found);
     }
-    public User findByIdAndUpdate(UUID id,User body)
+    public User findByIdAndUpdate(UUID id,NewUserDTO body)
     {
         User found=this.findById(id);
-        found.setNome(body.getNome());
-        found.setCognome(body.getCognome());
-        found.setDatanascita(body.getDatanascita());
-        found.setAvatar(body.getAvatar());
+        found.setNome(body.nome());
+        found.setCognome(body.cognome());
+        found.setDatanascita(LocalDate.now());
+        found.setPassword(bcrypt.encode(body.password()));
+        found.setAvatar(body.avatar());
         return userDao.save(found);
     }
     public User findByemail(String email)

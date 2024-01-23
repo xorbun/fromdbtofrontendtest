@@ -54,4 +54,5 @@ public class AuthService
         newuser.setRole(Role.USER);
         return userDao.save(newuser);
     }
+
 }

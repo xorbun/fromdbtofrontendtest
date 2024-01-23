@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -18,6 +19,7 @@ public class UserController
 {
     @Autowired
     private UserService userservice;
+
 
     @GetMapping
     public Page<User> getUsers(@RequestParam(defaultValue = "1") int page,
@@ -35,7 +37,7 @@ public class UserController
 
     @PutMapping("/{id_user}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public User getUserByIdAndUpdate(@PathVariable UUID id_user,@RequestBody User modifyUserPayload)
+    public User getUserByIdAndUpdate(@PathVariable UUID id_user,@RequestBody NewUserDTO modifyUserPayload)
     {
         return userservice.findByIdAndUpdate(id_user,modifyUserPayload);
     }
@@ -52,7 +54,7 @@ public class UserController
         return currentUser;
     }
     @PutMapping("/me")
-    public User getMeAndUpdate(@AuthenticationPrincipal User currentUser, @RequestBody User body)
+    public User getMeAndUpdate(@AuthenticationPrincipal User currentUser, @RequestBody NewUserDTO body)
     {
         return userservice.findByIdAndUpdate(currentUser.getId_user(), body);
     }
