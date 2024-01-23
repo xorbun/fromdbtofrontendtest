@@ -32,18 +32,7 @@ public class UserService
         return userDao.findAll(pageable);
     }
 
-    public User save(NewUserDTO body)
-    {
-        User newUser=new User();
-        newUser.setNome(body.nome());
-        newUser.setCognome(body.cognome());
-        newUser.setEmail(body.email());
-        newUser.setPassword(body.password());
-        newUser.setRole(Role.USER);
-        newUser.setDatanascita(LocalDate.now());
-        newUser.setAvatar("eoufhbeworughiowpefhwopeihgf");
-        return userDao.save(newUser);
-    }
+
     public User findById(UUID id)
     {
         return userDao.findById(id).orElseThrow(()->new NotFoundException(id));

@@ -1,4 +1,5 @@
 package brunocapobianco.fromdbtofrontendtest.Entities;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name="utenti")
+@JsonIgnoreProperties({"password","authorities","AccountNonExpired","enabled", "accountNonLocked","credentialsNonExpired", "username"})
 @Getter
 @Setter
 @ToString

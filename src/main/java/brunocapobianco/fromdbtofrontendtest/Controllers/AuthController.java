@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController
 {
     @Autowired
-    AuthService authService;
+    private AuthService authService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @PostMapping("/login")
     public UserLoginResponseDTO login(@RequestBody UserLoginDTO body)
     {
@@ -41,7 +41,7 @@ public class AuthController
         }
         else
         {
-            User newUser = userService.save(newUserPayload);
+            User newUser = authService.save(newUserPayload);
             return new NewUserDTOResponse(newUser.getId_user());
         }
     }

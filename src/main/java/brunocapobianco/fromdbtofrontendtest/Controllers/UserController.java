@@ -7,6 +7,7 @@ import brunocapobianco.fromdbtofrontendtest.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -31,12 +32,7 @@ public class UserController
     {
        return userservice.findById(id_user);
     }
-    @PostMapping
-    public NewUserDTOResponse createUser(@RequestBody NewUserDTO newUserPayload)
-    {
-        User newUser=userservice.save(newUserPayload);
-        return new NewUserDTOResponse(newUser.getId_user());
-    }
+
     @PutMapping("/{id_user}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public User getUserByIdAndUpdate(@PathVariable UUID id_user,@RequestBody User modifyUserPayload)
@@ -48,5 +44,21 @@ public class UserController
     public void deleteUser(@PathVariable UUID id_user)
     {
         userservice.findByIdAndDelete(id_user);
+
+    }
+    @GetMapping("/me")
+    public User getProfile(@AuthenticationPrincipal User currentUser)
+    {
+        return currentUser;
+    }
+    @PutMapping("/me")
+    public User getMeAndUpdate(@AuthenticationPrincipal User currentUser, @RequestBody User body)
+    {
+        return userservice.findByIdAndUpdate(currentUser.getId_user(), body);
+    }
+    @DeleteMapping("/me")
+    public void getMeAnDelete(@AuthenticationPrincipal User currentUser)
+    {
+        userservice.findByIdAndDelete(currentUser.getId_user());
     }
 }
